@@ -16,8 +16,10 @@ const bubbleSort = arr => {
         }
         n--;
     } while (swapped);
-    return console.log('Bubble sort :', arr);
+    console.log('Bubble sort :', arr);
+    return arr
 }
+
 
 
 
@@ -120,8 +122,6 @@ const mergeSort = arr => {
 
     return merge(mergeSort(left), mergeSort(right));
 }
-
-
 
 
 

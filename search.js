@@ -9,45 +9,35 @@ const leanerSearch = (arr, target) => {
 // leanerSearch(arr, 2121)  // O(n)
 
 
-
-
-
 // binary serch is only usable in teh siorted array
 
-// const binarySearch = (arr, target) => {
-//     let leftIndex = 0;
-//     let rightIndex = arr.length - 1;
-
-//     while (leftIndex <= rightIndex) {
-//         let middleIndex = Math.floor((leftIndex + rightIndex) / 2);
-
-//         if (target === arr[middleIndex])
-//             return middleIndex;
-//         if (target < arr[middleIndex])
-//             rightIndex = middleIndex - 1;
-//         else
-//             leftIndex = middleIndex + 1;
-//     }
-//     return "Not found";
-// }
+const binarySearch = (arr, target) => {
+    let  left = 0;
+    let rigth =arr.length-1;
+    while (left<=rigth) {
+        let middle = Math.floor((left+rigth)/2)
+        if(target ==arr[middle]) return middle
+        if(target>arr[middle]) left = middle+1
+        else rigth = middle-1
+    }
+    return "Not found";
+}
 
 // console.log(binarySearch(arr, 221));  // O(log n )
 
 
-
-const search = (arr, target, leftIndex, rightIndex) => {
-    if (leftIndex > rightIndex) return 'Not Found';
-    let middleIndex = Math.floor((leftIndex + rightIndex) / 2);
-    if (target === arr[middleIndex]) return middleIndex;
-    if (target < arr[middleIndex])
-        return search(arr, target, leftIndex, middleIndex - 1);
-    else
-        return search(arr, target, middleIndex + 1, rightIndex);
+const reqersieveBinarySearch =(arr, target, left = 0, right = arr.length) => {
+    if (left > right) return -1
+    let middle = Math.floor((left + right) / 2);
+    if (target === arr[middle]) return middle;
+    if (target > arr[middle]) return reqersieveBinarySearch(arr, target, middle + 1, right)
+    else return reqersieveBinarySearch(arr, target, left, middle - 1);
 }
 
-const recursiveBinarySearch = (arr, target) => {
-    return search(arr, target, 0, arr.length - 1);
-}
 
-// console.log(recursiveBinarySearch(arr, 2)); // O(log n)
+
+
+
+
+
 
