@@ -123,8 +123,3 @@ const mergeSort = arr => {
     return merge(mergeSort(left), mergeSort(right));
 }
 
-
-
-
-
-
