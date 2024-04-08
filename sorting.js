@@ -3,7 +3,7 @@ const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 56, 21, 542, 547, 232, 212, 32, 
 // ! Bubble Sort = { Time Complexity: O(N^2) }
 
 const bubbleSort = arr => {
-    arr = arr.slice()
+    arr = arr.slice( m)
     let n = arr.length;
     let swapped;
     do {
@@ -61,7 +61,7 @@ const insertionSort = arr => {
 
 
 
-// ! Quick Sort  = { Time complexity :O(n log n) }
+// ! Quick Sort  = { Time complexity :O(n log n) } 
 
 const quickSort = arr => {
     if (arr.length <= 1) return arr;
