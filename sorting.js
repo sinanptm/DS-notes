@@ -1,9 +1,14 @@
+
 const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 56, 21, 542, 547, 232, 212, 32, 231, 42, -1]
+
+
+
+
 
 // ! Bubble Sort = { Time Complexity: O(N^2) }
 
 const bubbleSort = arr => {
-    arr = arr.slice( m)
+    arr = arr.slice(m)
     let n = arr.length;
     let swapped;
     do {
@@ -34,9 +39,9 @@ const selectionSort = arr => {
             }
         }
         [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
-
+        
     }
-
+    
     return console.log('Selction Sort', arr);
 }
 
@@ -50,7 +55,7 @@ const insertionSort = arr => {
     for (let i = 1; i < arr.length; i++) {
         for (let j = i; j > 0; j--) {
             if (arr[j] < arr[j - 1])
-                [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
+            [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
             else
                 break;
         }
@@ -58,7 +63,6 @@ const insertionSort = arr => {
 
     return console.log('Insertion Sort :', arr);
 };
-
 
 
 // ! Quick Sort  = { Time complexity :O(n log n) } 
@@ -69,12 +73,12 @@ const quickSort = arr => {
 
     const pivot = arr[arr.length - 1];
     let leftArray = [];
-    let rightArray = [];
-
+    let rightArray = [];                                                                                                                                                                                               
+    
     for (const el of arr.slice(0, arr.length - 1)) {
         el < pivot ? leftArray.push(el) : rightArray.push(el)
     }
-
+    
     return [...quickSort(leftArray), pivot, ...quickSort(rightArray)];
 }
 
@@ -83,13 +87,13 @@ const quickSort = arr => {
 // ! Merge Sort = { Time complexity :O(n log n) }
 
 // const merge = (left, right) => {
-//     let result = [];
-//     let leftIndex = 0;
-//     let rightIndex = 0;
-//     while (leftIndex < left.length && rightIndex < right.length) {
+    //     let result = [];
+    //     let leftIndex = 0;
+    //     let rightIndex = 0;
+    //     while (leftIndex < left.length && rightIndex < right.length) {
 //         if (left[leftIndex] < right[rightIndex]) {
-//             result.push(left[leftIndex]);
-//             leftIndex++;
+    //             result.push(left[leftIndex]);
+    //             leftIndex++;
 //         } else {
 //             result.push(right[rightIndex]);
 //             rightIndex++;
@@ -115,11 +119,37 @@ const mergeSort = arr => {
     if (arr.length <= 1) {
         return arr;
     }
-
+    
     const middle = Math.floor(arr.length / 2);
     const left = arr.slice(0, middle);
     const right = arr.slice(middle);
-
+    
     return merge(mergeSort(left), mergeSort(right));
 }
 
+
+
+
+
+
+
+
+
+
+const mmm = (left,rigth)=>{
+    const res = []
+    while (left.length&&rigth.length) {
+        if (left[0]>=rigth[0]) res.push(left.shift())
+        else res.push(left.shift())
+    }
+    return [...res,...left,...rigth]
+}
+
+
+const mm = arr =>{
+    if(arr.length<=1)return arr
+    const middle = Math.floor(arr.length/2)
+    const left = arr.slice(0,middle)
+    const rigth = arr.slice(middle)
+    return mmm(mm(left),mm(rigth))
+}
