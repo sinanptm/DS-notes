@@ -8,7 +8,7 @@ const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 56, 21, 542, 547, 232, 212, 32, 
 // ! Bubble Sort = { Time Complexity: O(N^2) }
 
 const bubbleSort = arr => {
-    arr = arr.slice(m)
+    arr = arr.slice()
     let n = arr.length;
     let swapped;
     do {
@@ -60,6 +60,12 @@ const insertionSort = arr => {
                 break;
         }
     }
+    // for (let i = 1; i < arr.length; i++) {
+    //     for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
+    //         [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
+    //     }
+    // }
+    // return arr;
 
     return console.log('Insertion Sort :', arr);
 };
@@ -85,22 +91,6 @@ const quickSort = arr => {
 
 
 // ! Merge Sort = { Time complexity :O(n log n) }
-
-// const merge = (left, right) => {
-    //     let result = [];
-    //     let leftIndex = 0;
-    //     let rightIndex = 0;
-    //     while (leftIndex < left.length && rightIndex < right.length) {
-//         if (left[leftIndex] < right[rightIndex]) {
-    //             result.push(left[leftIndex]);
-    //             leftIndex++;
-//         } else {
-//             result.push(right[rightIndex]);
-//             rightIndex++;
-//         }
-//     }
-//     return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-// }
 
 
 const merge = (left, right) => {
@@ -128,28 +118,40 @@ const mergeSort = arr => {
 }
 
 
+console.log('merge',mergeSort(arr));
+quickSort(arr)
+bubbleSort(arr)
+selectionSort(arr)
+insertionSort(arr)
 
 
 
 
 
 
-
-
-const mmm = (left,rigth)=>{
-    const res = []
-    while (left.length&&rigth.length) {
-        if (left[0]>=rigth[0]) res.push(left.shift())
-        else res.push(left.shift())
+const s = arr=>{
+    for (let i = 0; i < arr.length-1; i++) {
+        let min = i
+        for (let j = i; j < arr.length; j++) {
+            if (arr[j]<arr[min]) {
+                min = j
+            }
+        }
+        [arr[i],arr[min]]=[arr[min],arr[i]]
+        
     }
-    return [...res,...left,...rigth]
+    return arr
 }
 
 
-const mm = arr =>{
-    if(arr.length<=1)return arr
-    const middle = Math.floor(arr.length/2)
-    const left = arr.slice(0,middle)
-    const rigth = arr.slice(middle)
-    return mmm(mm(left),mm(rigth))
+
+
+
+const i = arr=>{
+    for (let i = 1; i < arr.length; i++) {
+        for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
+            [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
+        }
+    }
+    return arr;
 }
