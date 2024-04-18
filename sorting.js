@@ -8,7 +8,7 @@ const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 56, 21, 542, 547, 232, 212, 32, 
 // ! Bubble Sort = { Time Complexity: O(N^2) }
 
 const bubbleSort = arr => {
-    arr = arr.slice()
+    arr = arr.slice();
     let n = arr.length;
     let swapped;
     do {
@@ -22,7 +22,7 @@ const bubbleSort = arr => {
         n--;
     } while (swapped);
     console.log('Bubble sort :', arr);
-    return arr
+    return arr;
 }
 
 
@@ -30,15 +30,15 @@ const bubbleSort = arr => {
 
 // ! Selection Sort  = { Time complexity :O(N^2) }
 const selectionSort = arr => {
-    arr = arr.slice()
+    arr = arr.slice();
     for (let i = 0; i < arr.length - 1; i++) {
-        let minIndex = i
+        let minIndex = i;
         for (let j = i + 1; j < arr.length; j++) {
             if (arr[j] < arr[minIndex]) {
-                minIndex = j
+                minIndex = j;
             }
         }
-        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
+        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
         
     }
     
@@ -97,12 +97,12 @@ const merge = (left, right) => {
     const res = [];
     while (left.length && right.length) {
         if (left[0] <= right[0]) {
-            res.push(left.shift())
+            res.push(left.shift());
         } else {
-            res.push(right.shift())
+            res.push(right.shift());
         }
     }
-    return [...res, ...left, ...right]
+    return [...res, ...left, ...right];
 }
 
 const mergeSort = arr => {
@@ -118,26 +118,17 @@ const mergeSort = arr => {
 }
 
 
-console.log('merge',mergeSort(arr));
-quickSort(arr)
-bubbleSort(arr)
-selectionSort(arr)
-insertionSort(arr)
-
-
-
-
 
 
 const s = arr=>{
     for (let i = 0; i < arr.length-1; i++) {
-        let min = i
+        let min = i;
         for (let j = i; j < arr.length; j++) {
             if (arr[j]<arr[min]) {
-                min = j
+                min = j;
             }
         }
-        [arr[i],arr[min]]=[arr[min],arr[i]]
+        [arr[i],arr[min]]=[arr[min],arr[i]];
         
     }
     return arr
@@ -154,4 +145,33 @@ const i = arr=>{
         }
     }
     return arr;
+}
+
+
+
+
+
+const m = (left,rigth)=>{
+    const res = []
+    while (left.length&&rigth.length) {
+        if (left[0]<=rigth[0]) {
+            res.push(left.shift())
+        }else{
+            res.push(rigth.shift())
+        }
+    }
+    return [...res,...left,...rigth]
+}
+
+
+const q = arr =>{
+    if (arr.length<=1) {
+        return arr
+    }
+    const pivot = arr[arr.length-1]
+    let left = [], right = []
+    for (const i of arr.slice(0,arr.length-1)) {
+        i<pivot?left.push(i):right.push(i)
+    }
+    return [...q(left), pivot, ...q(right)];
 }
