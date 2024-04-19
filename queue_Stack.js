@@ -113,61 +113,26 @@ class Queue {  //! FIFO
 
 
 
-class Q {
+
+class Stack {
     constructor() {
-        this.rear = 0
-        this.front = 0
-        this.items = {}
+        this.bucket = []
     }
-    enqueue(item){
-        this.items[this.rear]=item
-        this.rear++;
+    push(el) {
+        this.bucket.push(el)
+        return
     }
-    dequeue(){
-        const item = this.items[this.front]
-        delete this.items[this.front]
-        this.front++
-        return item
+    pop() {
+        return this.bucket.pop()
     }
-    size(){
-        return this.rear- this.front
+    size() {
+        return this.bucket.length
     }
-    
-    isEmpty(){
-        return this.isEmpty()===0
-    }
-        queList (){
-        return Object.values(this.items)
-    }
-}
-
-
-
-
-
-class  Stack{
-    constructor(){
-        this.items = []
-    }
-    push(item){
-       return this.items.push(item)
-    }
-    pop(){
-        return this.items.pop();
-    }
-    size(){
-        return this.items.length
-    }
-    isEmpty(){
-        return this.size()===0
-    }
-    print(){
-        console.log(this.items);
-        return this.items
-    }
-    peek(){
-        if(this.isEmpty()) return "Stack is empty"
-        return this.items[this.size()-1]
+    peek() {
+        return this.bucket[this.size() - 1]
     }
 
+    isEmpty() {
+        return this.size() === 0
+    }
 }
