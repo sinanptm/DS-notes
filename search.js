@@ -35,7 +35,19 @@ const reqersieveBinarySearch =(arr, target, left = 0, right = arr.length) => {
 }
 
 
-
+const req = (arr, target , left =9, right = arr.length)=>{
+    if (left > right) return -1; 
+    
+    let middle = Math.floor((left + right) / 2);
+    
+    if (target === arr[middle]) {
+        return middle;  
+    } else if (target > arr[middle]) {
+        return req(arr, target, middle + 1, right); 
+    } else {
+        return req(arr, target, left, middle - 1); 
+    }
+}
 
 
 

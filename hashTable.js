@@ -1,3 +1,4 @@
+
 class HashTable {
     constructor(size = 53) {
         this.table = new Array(size);
@@ -56,67 +57,68 @@ class HashTable {
     }
 }
 
+// Example usage:
+const table = new HashTable();
+table.set('me', 'sinan');
+table.set('aou', 'love');
+table.display();
 
 
 
 
 
 
-class Hash {
-    constructor(size = 54) {
-        this.size = size;
-        this.table = new Array(size);
-    }
 
-    #hash(key) {
-        let total = 0;
-        for (let i = 0; i < key.length; i++) {
-            total = (total * 31 + key.charCodeAt(i)) % this.size;
-        }
-        return total;
-    }
 
-    set(key, value) {
-        let index = this.#hash(key);
-        while (this.table[index] !== undefined && this.table[index].key !== key) {
-            index = (index + 1) % this.size;
-        }
-        this.table[index] = { key, value };
-    }
+// const arr = [2,3,4,54,1,32,34,5,1,4,21,4,5,21,43]
 
-    get(key) {
-        let index = this.#hash(key);
-        while (this.table[index] !== undefined) {
-            if (this.table[index].key === key) {
-                return this.table[index].value;
+
+// class Stacck {
+//     constructor(arr){
+//         this.bucket =arr
+//     }
+//     pop(){
+//         return this.bucket.pop()
+//     }
+//     findeven(){
+//         const sta = []
+//         for (let i = 0; i < this.bucket.length; i++) {
+//             const el = this.pop()
+//            if (el%2!==0) {
+//              sta.unshift(el)
+//            }
+//         }
+//         this.bucket = sta
+//         return this.bucket
+//     }
+// }
+
+// const remove = arr=>{
+//     const sta = new Stacck(arr)
+//     return sta.findeven()
+// }
+
+
+
+
+
+
+
+const bubble = arr =>{
+    let swapped 
+    let n = arr.length -1
+    do {
+        swapped = false;
+        for (let i = 0; i < n; i++) {
+            if (arr[i] > arr[i + 1]) {  
+                swapped = true;
+                [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
             }
-            index = (index + 1) % this.size;
         }
-        return undefined;
-    }
-
-    remove(key) {
-        let index = this.#hash(key);
-        while (this.table[index] !== undefined) {
-            if (this.table[index].key === key) {
-                this.table[index] = undefined;
-                return;
-            }
-            index = (index + 1) % this.size;
-        }
-    }
-
-    display() {
-        for (let i = 0; i < this.table.length; i++) {
-            if (this.table[i] !== undefined) {
-                console.log(`Key ${this.table[i].key} Value ${this.table[i].value}`);
-            }
-        }
-    }
+        n--;
+    } while (swapped);
+    
+    return arr;
 }
 
-const hs = new Hash();
-hs.set('name', "Sinan");
-hs.set('Age', 18);
-console.log(hs.get('name')); // Output: Sinan
-hs.display();
+console.log(bubble([2,3,7,5,8]));
