@@ -111,28 +111,3 @@ class Queue {  //! FIFO
 // cq.onqueue('ddw')
 // cq.onqueue('2112')
 
-
-
-
-class Stack {
-    constructor() {
-        this.bucket = []
-    }
-    push(el) {
-        this.bucket.push(el)
-        return
-    }
-    pop() {
-        return this.bucket.pop()
-    }
-    size() {
-        return this.bucket.length
-    }
-    peek() {
-        return this.bucket[this.size() - 1]
-    }
-
-    isEmpty() {
-        return this.size() === 0
-    }
-}

@@ -1,4 +1,4 @@
-const arr = [1, -1, -34, 2, 4, 343, 54, 213213, 6, 67, 5, 34, 3, 43, 34, 2124, 56, 21, 5, 6, 67, 23, 34, 432, 4324, 102]
+const array = [1, -1, -34, 2, 4, 343, 54, 213213, 6, 67, 5, 34, 3, 43, 34, 2124, 56, 21, 5, 6, 67, 23, 34, 432, 4324, 102]
 const descendingBubbleSort = arr => {
     arr = arr.slice();
     let changed;
@@ -68,8 +68,6 @@ const descendingInsertionSort = arr => {
     console.log('descendingInsertionSort', arr);
 };
 
-descendingInsertionSort(arr)
-
 
 const bb = arr => {
     arr = arr.slice()
@@ -129,3 +127,100 @@ const q = arr =>{
 
     return [...q(left),pivot,...q(right)]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const ins = arr =>{
+    arr = arr.slice()
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i; j > 0 && arr[j]<arr[j-1]; j--) {
+           [arr[j-1],arr[j]] = [arr[j],arr[j-1]]
+        }
+    }
+    return arr
+}
+
+
+const selection = arr =>{
+    arr = arr.slice()
+    for (let i = 0; i < arr.length-1; i++) {
+        let minIndex = i
+        for (let j = i+1; j < arr.length; j++) {
+           if(arr[minIndex]>arr[j]){
+             minIndex = j
+           }
+        }
+        [arr[i],arr[minIndex]] = [arr[minIndex],arr[i]]
+    }
+    return arr
+}
+
+
+
+
+const merge = (left,right)=>{
+    let res = []
+    while (left.length&&right.length) {
+        if (left[0]<=right[0]) {
+            res.push(left.shift())
+        } else {
+            res.push(right.shift())
+        }
+    }
+    return [...res,...left,...right]
+}
+
+const mergeSort = arr =>{
+    if(arr.length<=1) return arr
+    const middle = Math.floor(arr.length/2)
+    let left = mergeSort(arr.slice(0,middle))
+    let right = mergeSort(arr.slice(middle))
+    return merge(left,right)
+}
+
+
+const quickSort = arr =>{
+    if(arr.length<=1) return arr
+    arr = arr.slice()
+    let left=[] , right = []
+    let pivot = arr[arr.length-1]
+    for (let i = 0; i < arr.length-1; i++) {
+        pivot <arr[i] ?left.push(arr[i]):right.push(arr[i])
+    }
+    return [...quickSort(left),pivot,...quickSort(right)]
+    
+}
+
+
+console.log(quickSort(array));
+
+
+
+
+
+
