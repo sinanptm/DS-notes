@@ -1,83 +1,75 @@
-
-
-
-
-
 class Node {
-    constructor(data,next=null){
-        this.data = data
-        this.next = next
+    constructor(data, next = null) {
+        this.data = data;
+        this.next = next;
     }
 }
-
 
 class LinkedList {
-    constructor(){
-        this.head = null
-        this.length = 0
+    constructor() {
+        this.head = null;
+        this.size = 0;
     }
 
-    size(){
-        return this.length
+    insertFirst(data) {
+        this.head = new Node(data, this.head);
+        this.size++;
     }
-
-    insertFirst (data){
-        this.head = new Node(data,this.head)
-        this.length++
-        return
-    }
-    removeFirst(){
+                                
+    removeFirst() {
+        if (!this.head) {
+            return null;
+        }
         let data = this.head.data;
         this.head = this.head.next;
-        this.length--
-        return data
+        this.size--;
+        return data;
     }
-    first(){
-        return this.head.data
+
+    first() {
+        return this.head ? this.head.data : null;
     }
-    show(){
-        let cur = this.head
-        let res = []
+
+    show() {
+        let cur = this.head;
+        let res = [];
         while (cur) {
-            res.push(cur.data)
-            cur = cur.next
+            res.push(cur.data);
+            cur = cur.next;
         }
-        return res
+        return res;
     }
 }
-
 
 class Stack {
     constructor() {
-        this.bucket = new LinkedList()
+        this.bucket = new LinkedList();
     }
+
     push(el) {
-        this.bucket.insertFirst(el)
-        return
+        this.bucket.insertFirst(el);
     }
+
     pop() {
-        return this.bucket.removeFirst()
+        return this.bucket.removeFirst();
     }
+
     size() {
-        return this.bucket.size()
+        return this.bucket.size;
     }
+
     peek() {
-        return this.bucket.first()
+        return this.bucket.first();
     }
 
     isEmpty() {
-        return this.size() === 0
+        return this.size() === 0;
     }
 
-    display(){
-        return console.log(this.bucket.show());
+    display() {
+        console.log(this.bucket.show());
     }
 }
-
-
-
-
-
 
 
 const s = new Stack()
@@ -91,4 +83,15 @@ s.push(7)
 s.display()
 console.log(s.peek()); 
 s.pop()
-console.log(s.peek()); 
+console.log(s.peek()); 2
+
+
+
+
+
+
+
+
+
+
+module.exports =  LinkedList
