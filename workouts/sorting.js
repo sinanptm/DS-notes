@@ -1,4 +1,4 @@
-const array = [1, -1, -34, 2, 4, 343, 54, 213213, 6, 67, 5, 34, 3, 43, 34, 2124, 56, 21, 5, 6, 67, 23, 34, 432, 4324, 102]
+var array = [1, -1, -34, 2, 4, 343, 54, 213213, 6, 67, 5, 34, 3, 43, 34, 2124, 56, 21, 5, 6, 67, 23, 34, 432, 4324, 102]
 const descendingBubbleSort = arr => {
     arr = arr.slice();
     let changed;
@@ -131,30 +131,6 @@ const q = arr =>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const ins = arr =>{
     arr = arr.slice()
     for (let i = 0; i < arr.length; i++) {
@@ -215,12 +191,87 @@ const quickSort = arr =>{
     return [...quickSort(left),pivot,...quickSort(right)]
     
 }
+const bubble = arr =>{
+    arr = arr.slice()
+    let swapped , n = arr.length-1
+    do {
+        swapped = false
+        for (let i = 0; i <n; i++) {
+            if (arr[i]<arr[i+1]) {
+                [arr[i],arr[i+1]]= [arr[i+1],arr[i]]
+                swapped = true
+            }
+        }
+        n--;
+    } while (swapped);
+    return arr
+}
 
 
-console.log(quickSort(array));
+
+const quick = arr=>{
+    if (arr.length<=1) {
+        return arr
+    }
+    let pivot = arr[arr.length-1],left = [], right = []
+    for (let i = 0; i < arr.length-1; i++) {
+        pivot<arr[i]?left.push(arr[i]):right.push(arr[i])
+    }
+    return [...quick(left),pivot,...quick(right)]
+
+}
+
+let sort = (left,right)=>{
+    let res = []
+    while (left.length&&right.length) {
+        if(left[0]<right[0]) res.push(left.shift())
+        else res.push(right.shift())
+    }
+    return [...res,...left,...right]
+    
+}
+
+const msort = arr=>{
+    if(arr.length<=1){
+        return arr
+    }  
+    let middle = Math.floor(arr.length/2)
+    let left = msort(arr.slice(0,middle))   
+    let right = msort(arr.slice(middle))
+    return sort(left,right)
+}
 
 
 
 
 
+const sn = arr=>{
+    for (let i = 0; i < arr.length-1; i++) {
+       let min = i
+       for (let j = i+1; j < arr.length; j++) {
+            if (arr[j]<arr[min]) {
+                min = j
+            }
+        
+       }
+       [arr[i],arr[min]] = [arr[min],arr[i]]
+    }
+    return arr
+}
 
+
+
+const is = arr =>{
+    for (let i = 1; i < arr.length; i++) {
+        for (let j = i; j > 0 && arr[j]>arr[j-1]; j--) {
+            [arr[j-1],arr[j]] = [arr[j],arr[j-1]]
+            
+        }
+        
+    }
+    return arr
+}
+
+
+
+console.log(is(array));

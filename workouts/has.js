@@ -100,3 +100,110 @@ hs.maxCount();
 
 
 
+
+class Node {
+    constructor(data, next = null) {
+        this.data = data;
+        this.next = next;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    insert(data) {
+        this.head = new Node(data, this.head);
+        this.size++;
+    }
+
+    remove(key) {
+        let current = this.head;
+        let prev = null;
+        while (current) {
+            if (current.data.key === key) {
+                if (prev) {
+                    prev.next = current.next;
+                } else {
+                    this.head = current.next;
+                }
+                this.size--;
+                return current.data.value;
+            }
+            prev = current;
+            current = current.next;
+        }
+        return null;
+    }
+    getData() {
+        let res = [];
+        let cur = this.head;
+        while (cur) {
+            res.push(cur.data);
+            cur = cur.next;
+        }
+        return res;
+    }
+    getOne(key){
+        let cur = this.head;
+        while (cur) {
+            if (cur.data.key === key) {
+                return { [cur.data.key]: cur.data.value };
+            }
+            cur = cur.next;
+        }
+        return null;
+    }
+}
+
+class HashLinked {
+    constructor(size = 67) {
+        this.size = size;
+        this.table = new Array(size).fill(null).map(() => new LinkedList());
+    }
+
+
+
+    #hash(key) {
+        let total = 0;
+        key = String(key);
+        for (let i = 0; i < key.length; i++) {
+            total = (total * 32 + key.charCodeAt(i)) % this.size;
+        }
+        return total;
+    }
+
+    set(key, value) {
+        let index = this.#hash(key);
+        let list = this.table[index];
+        list.insert({ key, value });
+    }
+
+    remove(key) {
+        let index = this.#hash(key);
+        let list = this.table[index];
+        return list.remove(key);
+    }
+
+    getAll() {
+        let result = [];
+        this.table.forEach(list => {
+            result = result.concat(list.getData());
+        });
+        return result;
+    }
+
+    getOne(key){
+        let index = this.#hash(key);
+        let list = this.table[index];
+        console.log(list.getOne(key));
+    }
+}
+
+const table = new HashLinked(234);
+table.set('name', 'sinan');
+table.set('age', 19);
+table.getOne('name')
+console.log(table.getAll());

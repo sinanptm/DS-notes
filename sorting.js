@@ -120,58 +120,33 @@ const mergeSort = arr => {
 
 
 
-const s = arr=>{
-    for (let i = 0; i < arr.length-1; i++) {
-        let min = i;
-        for (let j = i; j < arr.length; j++) {
-            if (arr[j]<arr[min]) {
-                min = j;
-            }
-        }
-        [arr[i],arr[min]]=[arr[min],arr[i]];
-        
+
+let sort = (left,right)=>{
+    let res = []
+    while (left.length&&right.length) {
+        if(left[0]<=right[0]) res.push(left.shift())
+        else res.push(right.shift())
     }
-    return arr
+    return [...res,...left,...right]
+    
 }
 
-
-
-
-
-const i = arr=>{
-    for (let i = 1; i < arr.length; i++) {
-        for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
-            [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
-        }
-    }
-    return arr;
-}
-
-
-
-
-
-const m = (left,rigth)=>{
-    const res = []
-    while (left.length&&rigth.length) {
-        if (left[0]<=rigth[0]) {
-            res.push(left.shift())
-        }else{
-            res.push(rigth.shift())
-        }
-    }
-    return [...res,...left,...rigth]
-}
-
-
-const q = arr =>{
-    if (arr.length<=1) {
+const msort = arr=>{
+    if(arr.length<=1){
         return arr
-    }
-    const pivot = arr[arr.length-1]
-    let left = [], right = []
-    for (const i of arr.slice(0,arr.length-1)) {
-        i<pivot?left.push(i):right.push(i)
-    }
-    return [...q(left), pivot, ...q(right)];
+    }  
+    let middle = Math.floor(middle)
+    let left = msort(arr.slice(0,middle))   
+    let right = msort(arr.slice(middle))
+    return sort(left,right)
 }
+
+
+
+
+
+
+
+
+
+console.log(merge(array));
