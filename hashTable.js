@@ -1,10 +1,9 @@
-
 class HashTable {
     constructor(size = 53) {
-        this.table = new Array(size);
         this.size = size;
+        this.table = new Array(size);
+        this.count = 0; 
     }
-
     hash(key) {
         let total = 0;
         for (let i = 0; i < key.length; i++) {
@@ -12,12 +11,32 @@ class HashTable {
         }
         return total;
     }
+    resize(newSize) {
+        const oldTable = this.table;
+        this.size = newSize;
+        this.table = new Array(newSize);
+        this.count = 0;
+
+        for (const item of oldTable) {
+            if (item !== undefined) {
+                this.set(item.key, item.value);
+            }
+        }
+    }
 
     set(key, value) {
+        if ((this.count + 1) / this.size > 0.7) {
+            this.resize(this.size * 2);
+        }
+
         let index = this.hash(key);
 
         while (this.table[index] !== undefined && this.table[index].key !== key) {
             index = (index + 1) % this.size;
+        }
+
+        if (this.table[index] === undefined) {
+            this.count++;
         }
 
         this.table[index] = { key, value };
@@ -42,11 +61,13 @@ class HashTable {
         while (this.table[index] !== undefined) {
             if (this.table[index].key === key) {
                 delete this.table[index];
+                this.count--;
                 return;
             }
             index = (index + 1) % this.size;
         }
     }
+
 
     display() {
         for (let i = 0; i < this.size; i++) {
@@ -62,63 +83,3 @@ const table = new HashTable();
 table.set('me', 'sinan');
 table.set('aou', 'love');
 table.display();
-
-
-
-
-
-
-
-
-// const arr = [2,3,4,54,1,32,34,5,1,4,21,4,5,21,43]
-
-
-// class Stacck {
-//     constructor(arr){
-//         this.bucket =arr
-//     }
-//     pop(){
-//         return this.bucket.pop()
-//     }
-//     findeven(){
-//         const sta = []
-//         for (let i = 0; i < this.bucket.length; i++) {
-//             const el = this.pop()
-//            if (el%2!==0) {
-//              sta.unshift(el)
-//            }
-//         }
-//         this.bucket = sta
-//         return this.bucket
-//     }
-// }
-
-// const remove = arr=>{
-//     const sta = new Stacck(arr)
-//     return sta.findeven()
-// }
-
-
-
-
-
-
-
-const bubble = arr =>{
-    let swapped 
-    let n = arr.length -1
-    do {
-        swapped = false;
-        for (let i = 0; i < n; i++) {
-            if (arr[i] > arr[i + 1]) {  
-                swapped = true;
-                [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
-            }
-        }
-        n--;
-    } while (swapped);
-    
-    return arr;
-}
-
-console.log(bubble([2,3,7,5,8]));

@@ -89,11 +89,18 @@ class HashTable {
 
 const hs = new HashTable();
 hs.addArray( [1, 1, 1, 4, 5, 34, 54, 76, 8, 9, 0, 7, 5, 4, 3, 23, 34, 54, 577, 87, 832, 1, 1, 3, 4, 555, 6, 7, 7, 6, 8, 89, 9, 9, 7, 7] );
-hs.display();
-hs.maxCount();
-hs.remove(1)
-hs.display();
-hs.maxCount();
+// hs.display();
+// hs.maxCount();
+// hs.remove(1)
+// hs.display();
+// hs.maxCount();
+
+
+
+
+
+
+
 
 
 
@@ -158,13 +165,21 @@ class LinkedList {
     }
 }
 
+
+
+
+
+
+
+// ! With resisizing and separate chaining 
+
+
 class HashLinked {
-    constructor(size = 67) {
+    constructor(size = 54) {
         this.size = size;
         this.table = new Array(size).fill(null).map(() => new LinkedList());
+        this.count = 0;                     
     }
-
-
 
     #hash(key) {
         let total = 0;
@@ -179,12 +194,23 @@ class HashLinked {
         let index = this.#hash(key);
         let list = this.table[index];
         list.insert({ key, value });
+        this.count++;
+        if (this.count / this.size > 0.7) {
+            this.resize(this.size * 2);
+        }
     }
 
     remove(key) {
         let index = this.#hash(key);
         let list = this.table[index];
-        return list.remove(key);
+        let result = list.remove(key);
+        if (result !== null) {
+            this.count--;
+        }
+        if ((this.count - 1) / this.size < 0.3 && this.size > 53) {
+            this.resize(Math.floor(this.size / 2)); 
+        }
+        return result;
     }
 
     getAll() {
@@ -195,15 +221,33 @@ class HashLinked {
         return result;
     }
 
-    getOne(key){
+    getOne(key) {
         let index = this.#hash(key);
         let list = this.table[index];
-        console.log(list.getOne(key));
+        return list.getOne(key);
     }
-}
+
+    
+
+    resize(newSize) {
+        let oldTable = this.table;
+        this.size = newSize;
+        this.table = new Array(newSize).fill(null).map(() => new LinkedList());
+        this.count = 0;
+
+        oldTable.forEach(list => {
+            list.getData().forEach(item => {
+                this.set(item.key, item.value);
+            });
+        });
+    }
+}0
 
 const table = new HashLinked(234);
 table.set('name', 'sinan');
 table.set('age', 19);
+table.remove('age')
 table.getOne('name')
 console.log(table.getAll());
+
+

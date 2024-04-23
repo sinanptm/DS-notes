@@ -89,24 +89,12 @@
 // * trie
 // * bfs
 // * dfs 
-// * find the freq of element in an array
 // * binary tree properties
 // * degenerate tree
 // * monotonic stack
 // * monotonic queue
-// * memory leaks
 // * array memory allocation
 // * degree of a graph
 // * heap application
 // * circular list application
 // * what is data structure
-
-
-// * Learn about Bubble Sort, Insertion Sort, Selection Sort, Quick sort and Merge sort.
-// * Complete at least three sample workouts in each of them.
-// * 2. Learn the concept of Stack and Queue. Complete at least three sample workouts in each
-// * of them & do at least 3 problems from any competitive coding websites (Hacker Rank, Code Chef, Leet code, Algo Expert, etc.)
-// * a. PUSH, POP and Display elements in Stack
-// * b. Enqueue, Dequeue and Display elements in Queue
-// * 3. Learn the concepts of Hash Table. Complete at least 3 sample workouts.
-// * 4. Learn about the Applications of all structures you covered this week

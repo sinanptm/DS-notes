@@ -51,6 +51,10 @@ class Stack {
     }
 
     pop() {
+        if (this.isEmpty()) {
+            console.log("Stack underflow: The stack is empty.");
+            return null;
+        }
         return this.bucket.removeFirst();
     }
 
@@ -59,6 +63,10 @@ class Stack {
     }
 
     peek() {
+        if (this.isEmpty()) {
+            console.log("Stack underflow: The stack is empty.");
+            return null;
+        }
         return this.bucket.first();
     }
 
