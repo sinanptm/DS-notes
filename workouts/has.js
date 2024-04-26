@@ -88,6 +88,7 @@ class HashTable {
 }
 
 const hs = new HashTable();
+log
 hs.addArray( [1, 1, 1, 4, 5, 34, 54, 76, 8, 9, 0, 7, 5, 4, 3, 23, 34, 54, 577, 87, 832, 1, 1, 3, 4, 555, 6, 7, 7, 6, 8, 89, 9, 9, 7, 7] );
 // hs.display();
 // hs.maxCount();
@@ -227,8 +228,6 @@ class HashLinked {
         return list.getOne(key);
     }
 
-    
-
     resize(newSize) {
         let oldTable = this.table;
         this.size = newSize;
@@ -241,7 +240,7 @@ class HashLinked {
             });
         });
     }
-}0
+}
 
 const table = new HashLinked(234);
 table.set('name', 'sinan');
@@ -249,5 +248,57 @@ table.set('age', 19);
 table.remove('age')
 table.getOne('name')
 console.log(table.getAll());
+
+
+
+
+class LLL {
+    constructor(){
+        this.head = this.head
+        this.size = 0
+    }
+    insert(key,value){
+        new Node({key,value},this.head)
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
