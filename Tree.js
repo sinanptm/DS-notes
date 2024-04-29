@@ -11,7 +11,6 @@ class BinaryTree {
       this.root = null;
   }
 
-  // Insert a value into the binary tree
   insert(value) {
       const newNode = new TreeNode(value);
       if (!this.root) {
@@ -37,49 +36,67 @@ class BinaryTree {
       }
   }
 
-  // Search for a value in the binary tree
-  search(value) {
-      return this._searchNode(this.root, value);
-  }
 
-  _searchNode(node, value) {
+  search(value,node = this.root) {
       if (!node) return false;
       if (node.value === value) return true;
       if (value < node.value) {
-          return this._searchNode(node.left, value);
+          return this.search(node.left, value);
       } else {
-          return this._searchNode(node.right, value);
+          return this.search(node.right, value);
       }
   }
 
-  // Delete a node with a specific value from the binary tree
-  delete(value) {
-      this.root = this._deleteNode(this.root, value);
-  }
 
-  _deleteNode(node, value) {
-      if (!node) return null;
-      if (value === node.value) {
-          if (!node.left && !node.right) {
-              return null;
-          } else if (!node.left) {
-              return node.right;
-          } else if (!node.right) {
-              return node.left;
-          } else {
-              const minValue = this._findMinValue(node.right);
-              node.value = minValue;
-              node.right = this._deleteNode(node.right, minValue);
-              return node;
-          }
-      } else if (value < node.value) {
-          node.left = this._deleteNode(node.left, value);
-          return node;
-      } else {
-          node.right = this._deleteNode(node.right, value);
-          return node;
-      }
-  }
+
+  delete( value, node=this.root ) {
+    // Base case: If the current node is null, return null
+    if (!node) return null;
+    
+    // If the value to delete is equal to the current node's value
+    if (value === node.value) {
+        // If the current node has no children
+        if (!node.left && !node.right) {
+            // Return null to indicate that this node should be removed from the tree
+            return null;
+        } 
+        // If the current node has only a right child
+        else if (!node.left) {
+            // Return the right child node to replace the current node in the tree
+            return node.right;
+        } 
+        // If the current node has only a left child
+        else if (!node.right) {
+            // Return the left child node to replace the current node in the tree
+            return node.left;
+        } 
+        // If the current node has both left and right children
+        else {
+            // Find the minimum value node in the right subtree
+            const minValue = this._findMinValue(node.right);
+            // Replace the current node's value with the minimum value
+            node.value = minValue;
+            // Delete the minimum value node from the right subtree recursively
+            node.right = this.delete(node.right, minValue);
+            // Return the updated current node
+            return node;
+        }
+    } 
+    // If the value to delete is less than the current node's value
+    else if (value < node.value) {
+        // Recursively delete the value from the left subtree
+        node.left = this.delete(node.left, value);
+        // Return the updated current node
+        return node;
+    } 
+    // If the value to delete is greater than the current node's value
+    else {
+        // Recursively delete the value from the right subtree
+        node.right = this.delete(node.right, value);
+        // Return the updated current node
+        return node;
+    }
+}
 
   _findMinValue(node) {
       while (node.left) {
@@ -216,30 +233,30 @@ tree.insert(15);
 tree.insert(3);
 tree.insert(7);
 
-console.log("Inorder Traversal:");
-tree.inorder();
+// console.log("Inorder Traversal:");
+// tree.inorder();
 
-console.log("\nPreorder Traversal:");
-tree.preorder();
+// console.log("\nPreorder Traversal:");
+// tree.preorder();
 
-console.log("\nPostorder Traversal:");
-tree.postorder();
+// console.log("\nPostorder Traversal:");
+// tree.postorder();
 
-console.log("\nLevel Order Traversal:");
-tree.levelOrder();
+// console.log("\nLevel Order Traversal:");
+// tree.levelOrder();
 
-console.log("\nHeight of the Tree:", tree.height());
+// console.log("\nHeight of the Tree:", tree.height());
 
-console.log("\nTotal Number of Nodes:", tree.countNodes());
+// console.log("\nTotal Number of Nodes:", tree.countNodes());
 
-console.log("\nMinimum Value in the Tree:", tree.findMinValue());
+// console.log("\nMinimum Value in the Tree:", tree.findMinValue());
 
-console.log("\nMaximum Value in the Tree:", tree.findMaxValue());
+// console.log("\nMaximum Value in the Tree:", tree.findMaxValue());
 
-console.log("\nIs the Tree Balanced?", tree.isBalanced());
+// console.log("\nIs the Tree Balanced?", tree.isBalanced());
 
-console.log("\nLowest Common Ancestor of 3 and 7:", tree.lowestCommonAncestor(3, 7).value);
+// console.log("\nLowest Common Ancestor of 3 and 7:", tree.lowestCommonAncestor(3, 7).value);
 
-tree.delete(5);
-console.log("\nInorder Traversal after deleting 5:");
-tree.inorder();
+// tree.delete(5);
+// console.log("\nInorder Traversal after deleting 5:");
+// tree.inorder();
