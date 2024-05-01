@@ -1,262 +1,161 @@
-class TreeNode {
-  constructor(value) {
-      this.value = value;
-      this.left = null;
-      this.right = null;
-  }
-}
-
-class BinaryTree {
-  constructor() {
-      this.root = null;
-  }
-
-  insert(value) {
-      const newNode = new TreeNode(value);
-      if (!this.root) {
-          this.root = newNode;
-      } else {
-          this._insertNode(this.root, newNode);
-      }
-  }
-
-  _insertNode(node, newNode) {
-      if (newNode.value < node.value) {
-          if (!node.left) {
-              node.left = newNode;
-          } else {
-              this._insertNode(node.left, newNode);
-          }
-      } else {
-          if (!node.right) {
-              node.right = newNode;
-          } else {
-              this._insertNode(node.right, newNode);
-          }
-      }
-  }
-
-
-  search(value,node = this.root) {
-      if (!node) return false;
-      if (node.value === value) return true;
-      if (value < node.value) {
-          return this.search(node.left, value);
-      } else {
-          return this.search(node.right, value);
-      }
-  }
-
-
-
-  delete( value, node=this.root ) {
-    // Base case: If the current node is null, return null
-    if (!node) return null;
-    
-    // If the value to delete is equal to the current node's value
-    if (value === node.value) {
-        // If the current node has no children
-        if (!node.left && !node.right) {
-            // Return null to indicate that this node should be removed from the tree
-            return null;
-        } 
-        // If the current node has only a right child
-        else if (!node.left) {
-            // Return the right child node to replace the current node in the tree
-            return node.right;
-        } 
-        // If the current node has only a left child
-        else if (!node.right) {
-            // Return the left child node to replace the current node in the tree
-            return node.left;
-        } 
-        // If the current node has both left and right children
-        else {
-            // Find the minimum value node in the right subtree
-            const minValue = this._findMinValue(node.right);
-            // Replace the current node's value with the minimum value
-            node.value = minValue;
-            // Delete the minimum value node from the right subtree recursively
-            node.right = this.delete(node.right, minValue);
-            // Return the updated current node
-            return node;
-        }
-    } 
-    // If the value to delete is less than the current node's value
-    else if (value < node.value) {
-        // Recursively delete the value from the left subtree
-        node.left = this.delete(node.left, value);
-        // Return the updated current node
-        return node;
-    } 
-    // If the value to delete is greater than the current node's value
-    else {
-        // Recursively delete the value from the right subtree
-        node.right = this.delete(node.right, value);
-        // Return the updated current node
-        return node;
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.right = null;
+        this.left = null;
     }
 }
 
-  _findMinValue(node) {
-      while (node.left) {
-          node = node.left;
-      }
-      return node.value;
-  }
+class ATree {
+    constructor() {
+        this.root = null;
+    }
 
-  // Inorder Traversal
-  inorder() {
-      this._inorderTraversal(this.root);
-  }
+    insert(val) {
+        let node = new Node(val);
+        if (!this.root) this.root = node;
+        else this.#insert(node, this.root);
+    }
 
-  _inorderTraversal(node) {
-      if (!node) return;
-      this._inorderTraversal(node.left);
-      console.log(node.value);
-      this._inorderTraversal(node.right);
-  }
+    #insert(newNode, root) {
+        if (newNode.value < root.value) {
+            if (root.left === null) root.left = newNode;
+            else this.#insert(newNode, root.left);
+        } else {
+            if (root.right === null) root.right = newNode;
+            else this.#insert(newNode, root.right);
+        }
+    }
 
-  // Preorder Traversal
-  preorder() {
-      this._preorderTraversal(this.root);
-  }
+    search(value, root = this.root) {
+        if (!root) return false;
+        if (root.value === value) return true;
+        if (value < root.value) return this.search(value, root.left);
+        if (value > root.value) return this.search(value, root.right);
+    }
 
-  _preorderTraversal(node) {
-      if (!node) return;
-      console.log(node.value);
-      this._preorderTraversal(node.left);
-      this._preorderTraversal(node.right);
-  }
+    preOrder(root = this.root) {
+        let res = [];
+        if (root) {
+            res.push(root.value);
+            res = res.concat(this.preOrder(root.left));
+            res = res.concat(this.preOrder(root.right));
+        }
+        return res;
+    }
 
-  // Postorder Traversal
-  postorder() {
-      this._postorderTraversal(this.root);
-  }
+    inOrder(root = this.root) {
+        let res = [];
+        if (root) {
+            res = res.concat(this.inOrder(root.left));
+            res.push(root.value);
+            res = res.concat(this.inOrder(root.right));
+        }
+        return res;
+    }
 
-  _postorderTraversal(node) {
-      if (!node) return;
-      this._postorderTraversal(node.left);
-      this._postorderTraversal(node.right);
-      console.log(node.value);
-  }
+    postOrder(root = this.root) {
+        let res = [];
+        if (root) {
+            res = res.concat(this.postOrder(root.left));
+            res = res.concat(this.postOrder(root.right));
+            res.push(root.value);
+        }
+        return res;
+    }
 
-  // Level Order Traversal (Breadth-First Traversal)
-  levelOrder() {
-      if (!this.root) return;
-      const queue = [this.root];
-      while (queue.length > 0) {
-          const node = queue.shift();
-          console.log(node.value);
-          if (node.left) queue.push(node.left);
-          if (node.right) queue.push(node.right);
-      }
-  }
+    levelOrder() {
+        let res = [];
+        if (!this.root) return res;
+        const queue = [this.root];
+        while (queue.length) {
+            let current = queue.shift();
+            res.push(current.value);
+            if (current.left) queue.push(current.left);
+            if (current.right) queue.push(current.right);
+        }
+        return res;
+    }
 
-  // Calculate the height of the binary tree
-  height() {
-      return this._calculateHeight(this.root);
-  }
+    minValue(root = this.root) {
+        return root.left ? this.minValue(root.left) : root.value;
+    }
 
-  _calculateHeight(node) {
-      if (!node) return -1;
-      const leftHeight = this._calculateHeight(node.left);
-      const rightHeight = this._calculateHeight(node.right);
-      return Math.max(leftHeight, rightHeight) + 1;
-  }
+    maxValue(root = this.root) {
+        return root.right ? this.maxValue(root.right) : root.value;
+    }
 
-  // Count the total number of nodes in the binary tree
-  countNodes() {
-      return this._countNodes(this.root);
-  }
+    delete(value) {
+        this.root = this.#delete(this.root, value);
+    }
 
-  _countNodes(node) {
-      if (!node) return 0;
-      return 1 + this._countNodes(node.left) + this._countNodes(node.right);
-  }
+    #delete(root, value) {
+        if (root === null) return root;
+        if (value < root.value) {
+            root.left = this.#delete(root.left, value);
+        } else if (value > root.value) {
+            root.right = this.#delete(root.right, value);
+        } else {
+            if (!root.left) return root.right;
+            else if (!root.right) return root.left;
 
-  // Find the minimum value in the binary tree
-  findMinValue() {
-      if (!this.root) return null;
-      let node = this.root;
-      while (node.left) {
-          node = node.left;
-      }
-      return node.value;
-  }
+            root.value = this.minValue(root.right);
+            root.right = this.#delete(root.right, root.value);
+        }
+        return root;
+    }
 
-  // Find the maximum value in the binary tree
-  findMaxValue() {
-      if (!this.root) return null;
-      let node = this.root;
-      while (node.right) {
-          node = node.right;
-      }
-      return node.value;
-  }
+    hieght(root = this.root){
+        if(!root) return -1
+        const left = this.hieght(root.left)
+        const right = this.hieght(root.right)
+        return Math.max(left,right)+1
+    }
 
-  // Check whether the binary tree is balanced
-  isBalanced() {
-      return this._isBalanced(this.root) !== -1;
-  }
 
-  _isBalanced(node) {
-      if (!node) return 0;
-      const leftHeight = this._isBalanced(node.left);
-      if (leftHeight === -1) return -1;
-      const rightHeight = this._isBalanced(node.right);
-      if (rightHeight === -1) return -1;
-      if (Math.abs(leftHeight - rightHeight) > 1) return -1;
-      return Math.max(leftHeight, rightHeight) + 1;
-  }
+  
 
-  // Find the lowest common ancestor (LCA) of two nodes
-  lowestCommonAncestor(node1, node2) {
-      return this._lowestCommonAncestor(this.root, node1, node2);
-  }
-
-  _lowestCommonAncestor(node, node1, node2) {
-      if (!node) return null;
-      if (node.value === node1 || node.value === node2) return node;
-      const left = this._lowestCommonAncestor(node.left, node1, node2);
-      const right = this._lowestCommonAncestor(node.right, node1, node2);
-      if (left && right) return node;
-      return left ? left : right;
-  }
+    depth(value,root=this.root,level = 0){
+        if(!root) return -1;
+        if(root.value===value)return level
+        const leftDepth = this.depth(value,root.left,level+1);
+        const rightDepth = this.depth(value,root.right,level+1);
+        if(leftDepth!==-1) return leftDepth;
+        if(rightDepth!==-1)return rightDepth
+        return -1;
+    }
+    findClosestValue(target) {
+        if (!this.root) return null; // Tree is empty
+        let closest = this.root.value;
+        let current = this.root;
+        while (current !== null) {
+            if (Math.abs(current.value - target) < Math.abs(closest - target)) {
+                closest = current.value;
+            }
+            if (target < current.value) {
+                current = current.left;
+            } else if (target > current.value) {
+                current = current.right;
+            } else {
+                break; 
+            }
+        }
+        return closest;
+    }
 }
 
-// Example usage:
-const tree = new BinaryTree();
+let tree = new ATree();
+tree.insert(50);
+tree.insert(20);
+tree.insert(23);
+tree.insert(87);
+tree.insert(72);
 tree.insert(10);
-tree.insert(5);
-tree.insert(15);
-tree.insert(3);
-tree.insert(7);
-
-// console.log("Inorder Traversal:");
-// tree.inorder();
-
-// console.log("\nPreorder Traversal:");
-// tree.preorder();
-
-// console.log("\nPostorder Traversal:");
-// tree.postorder();
-
-// console.log("\nLevel Order Traversal:");
-// tree.levelOrder();
-
-// console.log("\nHeight of the Tree:", tree.height());
-
-// console.log("\nTotal Number of Nodes:", tree.countNodes());
-
-// console.log("\nMinimum Value in the Tree:", tree.findMinValue());
-
-// console.log("\nMaximum Value in the Tree:", tree.findMaxValue());
-
-// console.log("\nIs the Tree Balanced?", tree.isBalanced());
-
-// console.log("\nLowest Common Ancestor of 3 and 7:", tree.lowestCommonAncestor(3, 7).value);
-
-// tree.delete(5);
-// console.log("\nInorder Traversal after deleting 5:");
-// tree.inorder();
+tree.insert(35);
+tree.insert(23);
+tree.insert(678);
+console.log(`inOrder: ${tree.inOrder()}`);
+console.log(`preOrder: ${tree.preOrder()}`);
+console.log(`postOrder: ${tree.postOrder()}`);
+console.log(`levelOrder: ${tree.levelOrder()}`);
+console.log(tree.hieght());

@@ -81,11 +81,12 @@ class BinaryTree {
 
     minVal(node = this.root){
         if(!node.left){
-            return node.left
-        }else{
+            return node.value
+        } else {
             return this.minVal(node.left)
         }
     }
+    
 
     maxVal(node = this.root){
         if (!node.right) {
@@ -100,13 +101,55 @@ class BinaryTree {
         
     }
 
+    delete(value){
+        this.root = this.#deleteVal(value,this.root)   
+    }
+    
     #deleteVal(value,node){
         if(node===null) return node
-        if () {
-            
+        if (value<node.value) {
+            node.left = this.#deleteVal(value,node.left)
+        } else if (value>node.value){
+            node.right = this.#deleteVal(value,node.right)
+        } else {
+            if(!node.left && !node.right){
+                return null
+            } else if (!node.left) {
+                return node.right
+            } else if (!node.right){
+                return node.left
+            }
+            node.value = this.minVal(node.right)
+            node.right = this.#deleteVal(node.value,node.right)
         }
+        return node
     }
 
+    deletea(v){
+        this.root = this.ddd(this.root,val)
+    }
+
+    ddd(root,val){
+        if(root === null)
+        if(val<root.value){
+            root.left = this.ddd(root.left,val)
+        }else if(val>node.left){
+            root.right = this.ddd(root.right,val)
+        }else{
+            if (!root.left&&!root.right) {
+                return null
+            }else if (!root.left){
+                return root.right
+            }else if(!root.right){
+                return root.left
+            }
+            root.value = this.minVal(node.right)
+            root.right = this.ddd(node.value,val)
+
+        }
+        return node
+    }
+    
 }
 
 
