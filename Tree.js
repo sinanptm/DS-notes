@@ -8,140 +8,114 @@ class Node {
 
 class ATree {
     constructor() {
-        this.root = null;
+        this.root = null
     }
-
-    insert(val) {
-        let node = new Node(val);
-        if (!this.root) this.root = node;
-        else this.#insert(node, this.root);
+    insert(value) {
+        const newNode = new Node(value);
+        if (!this.root) this.root = newNode;
+        else this.#insert(newNode, this.root);
     }
-
-    #insert(newNode, root) {
-        if (newNode.value < root.value) {
-            if (root.left === null) root.left = newNode;
-            else this.#insert(newNode, root.left);
+    #insert(newNode, node) {
+        if (newNode.value < node.value) {
+            if (!node.left) node.left = newNode;
+            else return this.#insert(newNode,node.left);
         } else {
-            if (root.right === null) root.right = newNode;
-            else this.#insert(newNode, root.right);
+            if (!node.right) node.right = newNode;
+            else return this.#insert(newNode,node.right);
         }
     }
-
-    search(value, root = this.root) {
-        if (!root) return false;
-        if (root.value === value) return true;
-        if (value < root.value) return this.search(value, root.left);
-        if (value > root.value) return this.search(value, root.right);
+    search(value, node = this.root) {
+        if (!node) return false;
+        if (node.value === value) return true;
+        if (value < node.value) return this.search(node.left);
+        else return this.search(node.right);
     }
-
-    preOrder(root = this.root) {
+    preOrder(node = this.root) {
         let res = [];
-        if (root) {
-            res.push(root.value);
-            res = res.concat(this.preOrder(root.left));
-            res = res.concat(this.preOrder(root.right));
+        if (node) {
+            res.push(node.value);
+            res = res.concat(this.preOrder(node.left));
+            res = res.concat(this.preOrder(node.right));
         }
-        return res;
+        return res
     }
-
-    inOrder(root = this.root) {
+    inOrder(node = this.root) {
         let res = [];
-        if (root) {
-            res = res.concat(this.inOrder(root.left));
-            res.push(root.value);
-            res = res.concat(this.inOrder(root.right));
+        if (node) {
+            res = res.concat(this.inOrder(node.left))
+            res.push(node.value)
+            res = res.concat(this.inOrder(node.right))
         }
-        return res;
+        return res
     }
-
-    postOrder(root = this.root) {
-        let res = [];
-        if (root) {
-            res = res.concat(this.postOrder(root.left));
-            res = res.concat(this.postOrder(root.right));
-            res.push(root.value);
+    postOrder(node = this.root) {
+        let res = []
+        if (node) {
+            res = res.concat(this.postOrder(node.left))
+            res = res.concat(this.postOrder(node.right))
+            res.push(node.value)
         }
-        return res;
+        return res
     }
-
-    levelOrder() {
-        let res = [];
-        if (!this.root) return res;
-        const queue = [this.root];
+    levelOrder(node = this.root) {
+        let queue = [node]
+        let res = []
         while (queue.length) {
-            let current = queue.shift();
-            res.push(current.value);
-            if (current.left) queue.push(current.left);
-            if (current.right) queue.push(current.right);
+            let cur = queue.shift()
+            res.push(cur.value)
+            if (cur.left) queue.push(cur.left)
+            if (cur.right) queue.push(cur.right)
         }
-        return res;
+        return res
     }
-
-    minValue(root = this.root) {
-        return root.left ? this.minValue(root.left) : root.value;
-    }
-
-    maxValue(root = this.root) {
-        return root.right ? this.maxValue(root.right) : root.value;
-    }
-
     delete(value) {
-        this.root = this.#delete(this.root, value);
+
     }
-
-    #delete(root, value) {
-        if (root === null) return root;
-        if (value < root.value) {
-            root.left = this.#delete(root.left, value);
-        } else if (value > root.value) {
-            root.right = this.#delete(root.right, value);
-        } else {
-            if (!root.left) return root.right;
-            else if (!root.right) return root.left;
-
-            root.value = this.minValue(root.right);
-            root.right = this.#delete(root.right, root.value);
+    #delete(value, node) {
+        if (!node) return node
+        if (value < node.value) return this.#delete(value, node.left)
+        else if (value > node.value) return this.#delete(value, node.right)
+        else {
+            if (!node.left) return node.right
+            if (!node.right) return node.left
+            node.value = this.minValue(node.right)
+            node.right = this.#delete(value, node.right)
         }
-        return root;
+        return node
     }
-
-    hieght(root = this.root){
-        if(!root) return -1
-        const left = this.hieght(root.left)
-        const right = this.hieght(root.right)
-        return Math.max(left,right)+1
+    minValue(node = this.root) {
+        return node.left ? node.left.value : this.minValue(node.left)
     }
-
-
-  
-
-    depth(value,root=this.root,level = 0){
-        if(!root) return -1;
-        if(root.value===value)return level
-        const leftDepth = this.depth(value,root.left,level+1);
-        const rightDepth = this.depth(value,root.right,level+1);
-        if(leftDepth!==-1) return leftDepth;
-        if(rightDepth!==-1)return rightDepth
-        return -1;
+    maxValue(node = this.root) {
+        return node.right ? node.right.value : this.maxValue(node.right)
     }
-    findClosestValue(target) {
-        if (!this.root) return null; // Tree is empty
+    hieght(node = this.root) {
+        if (!node) return -1
+        let left = this.hieght(node.left)
+        let right = this.hieght(node.right)
+        return Math.max(left, right)
+    }
+    depth(value, node = this.root, level = 0) {
+        if (!node) return -1
+        if (node.value === value) return level
+        const left = this.depth(value, node.left, level + 1)
+        const right = this.depth(value, node.right, level + 1)
+        if (left !== -1) return left
+        if (right !== -1) return right
+        return -1
+    }
+    findClosestValue(value) {
+        let cur = this.root;
         let closest = this.root.value;
-        let current = this.root;
-        while (current !== null) {
-            if (Math.abs(current.value - target) < Math.abs(closest - target)) {
-                closest = current.value;
+        while (cur) {
+            if (Math.abs(cur.value - value) < Math.abs(closest - value)) {
+                closest = cur.value;
             }
-            if (target < current.value) {
-                current = current.left;
-            } else if (target > current.value) {
-                current = current.right;
-            } else {
-                break; 
-            }
+            cur = value < cur.value ? cur.left : cur.right;
         }
         return closest;
     }
+    
 }
 
 let tree = new ATree();
@@ -159,3 +133,4 @@ console.log(`preOrder: ${tree.preOrder()}`);
 console.log(`postOrder: ${tree.postOrder()}`);
 console.log(`levelOrder: ${tree.levelOrder()}`);
 console.log(tree.hieght());
+console.log(tree.findClosestValue(22));
