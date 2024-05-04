@@ -25,3 +25,4 @@ const reqersieveBinarySearch = (arr, target, left = 0, right = arr.length - 1) =
     if (target > arr[middle]) return reqersieveBinarySearch(arr, target, middle + 1, right);
     else return reqersieveBinarySearch(arr, target, left, middle - 1);
 };
+
