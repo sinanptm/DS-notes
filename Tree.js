@@ -6,7 +6,7 @@ class Node {
     }
 }
 
-class ATree {
+class BinaryTree {
     constructor() {
         this.root = null
     }
@@ -18,10 +18,10 @@ class ATree {
     #insert(newNode, node) {
         if (newNode.value < node.value) {
             if (!node.left) node.left = newNode;
-            else return this.#insert(newNode,node.left);
+            else return this.#insert(newNode, node.left);
         } else {
             if (!node.right) node.right = newNode;
-            else return this.#insert(newNode,node.right);
+            else return this.#insert(newNode, node.right);
         }
     }
     search(value, node = this.root) {
@@ -69,32 +69,49 @@ class ATree {
         return res
     }
     delete(value) {
+        this.root = this.#delete(this.root, value);
+    }
 
-    }
-    #delete(value, node) {
-        if (!node) return node
-        if (value < node.value) return this.#delete(value, node.left)
-        else if (value > node.value) return this.#delete(value, node.right)
-        else {
-            if (!node.left) return node.right
-            if (!node.right) return node.left
-            node.value = this.minValue(node.right)
-            node.right = this.#delete(value, node.right)
+    #delete(root, value) {
+        if (!root) return null;
+        if (value < root.value) root.left = this.#delete(root.left, value);
+        else if (value > root.value) {
+            root.right = this.#delete(root.right, value);
+        } else {
+            if (!root.left) return root.right;
+            if (!root.right) return root.left;
+            root.value = this.minValue(root.right);
+            root.right = this.#delete(root.right, root.value);
         }
-        return node
+
+        return root;
     }
-    minValue(node = this.root) {
-        return node.left ? node.left.value : this.minValue(node.left)
+
+    minValue(root = this.root){
+        let val = root.value
+        while (root.left) {
+            val = root.value
+            root =root.left
+        }
+        return val
+    }
+    maxValue(root = this.root){
+        let val = root.value
+        while (root.right) {
+            val = root.value
+            root =root.right
+        }
+        return val
     }
     maxValue(node = this.root) {
         return node.right ? node.right.value : this.maxValue(node.right)
     }
-    hieght(node = this.root) {
-        if (!node) return -1
-        let left = this.hieght(node.left)
-        let right = this.hieght(node.right)
-        return Math.max(left, right)
-    }
+    height(node = this.root) {
+        if (!node) return -1;
+        let leftHeight = this.height(node.left);
+        let rightHeight = this.height(node.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }    
     depth(value, node = this.root, level = 0) {
         if (!node) return -1
         if (node.value === value) return level
@@ -115,10 +132,21 @@ class ATree {
         }
         return closest;
     }
-    
+
+}
+function isValidBST(root, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+    if (!root) {
+        return true;
+    }
+
+    if (root.value <= min || root.value >= max) {
+        return false;
+    }
+
+    return isValidBST(root.left, min, root.value) && isValidBST(root.right, root.value, max);
 }
 
-let tree = new ATree();
+let tree = new BinaryTree();
 tree.insert(50);
 tree.insert(20);
 tree.insert(23);
@@ -132,5 +160,7 @@ console.log(`inOrder: ${tree.inOrder()}`);
 console.log(`preOrder: ${tree.preOrder()}`);
 console.log(`postOrder: ${tree.postOrder()}`);
 console.log(`levelOrder: ${tree.levelOrder()}`);
-console.log(tree.hieght());
-console.log(tree.findClosestValue(22));
+tree.delete(678)
+console.log(tree.height());
+console.log(tree.depth(10));
+console.log(`levelOrder: ${JSON.stringify(tree)}`);

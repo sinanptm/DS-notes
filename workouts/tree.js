@@ -1,168 +1,147 @@
-class TreeNode {
+class Node {
     constructor(value) {
-        this.value = value
-        this.left = null
-        this.right = null
+        this.value = value;
+        this.right = null;
+        this.left = null;
     }
 }
+
 class BinaryTree {
     constructor() {
         this.root = null
     }
     insert(value) {
-        const newNode = new TreeNode(value);
-        if (!this.root) {
-            this.root = newNode;
-        } else {
-            this._insertNode(this.root, newNode);
-        }
+        const newNode = new Node(value);
+        if (!this.root) this.root = newNode;
+        else this.#insert(newNode, this.root);
     }
-
-    _insertNode(node, newNode) {
+    #insert(newNode, node) {
         if (newNode.value < node.value) {
             if (!node.left) node.left = newNode;
-            else this._insertNode(node.left, newNode);
+            else return this.#insert(newNode,node.left);
         } else {
             if (!node.right) node.right = newNode;
-            else this._insertNode(node.right, newNode);
-
+            else return this.#insert(newNode,node.right);
         }
     }
-
     search(value, node = this.root) {
         if (!node) return false;
         if (node.value === value) return true;
-        if (value < node.value) {
-            return this.search(node.left, value);
-        } else {
-            return this.search(node.right, value);
-        }
+        if (value < node.value) return this.search(node.left);
+        else return this.search(node.right);
     }
-
-    // ! DFS
-
     preOrder(node = this.root) {
+        let res = [];
         if (node) {
-            console.log('pre', node.value);
-            this.preOrder(node.left)
-            this.preOrder(node.right)
+            res.push(node.value);
+            res = res.concat(this.preOrder(node.left));
+            res = res.concat(this.preOrder(node.right));
         }
+        return res
     }
     inOrder(node = this.root) {
+        let res = [];
         if (node) {
-            this.inOrder(node.left)
-            console.log('ino', node.value);
-            this.inOrder(node.right)
+            res = res.concat(this.inOrder(node.left))
+            res.push(node.value)
+            res = res.concat(this.inOrder(node.right))
         }
+        return res
     }
     postOrder(node = this.root) {
+        let res = []
         if (node) {
-            this.postOrder(node.left)
-            this.postOrder(node.right)
-            console.log('post', node.value);
+            res = res.concat(this.postOrder(node.left))
+            res = res.concat(this.postOrder(node.right))
+            res.push(node.value)
         }
+        return res
     }
-
-    // ! BFS
-    levelOrder() {
-        const queue = [this.root]
+    levelOrder(node = this.root) {
+        let queue = [node]
+        let res = []
         while (queue.length) {
-            let current = queue.shift()
-            console.log(current.value);
-            if (current.left) {
-                queue.push(current.left)
-            }
-            if (current.right) {
-                queue.push(current.right)
-            }
+            let cur = queue.shift()
+            res.push(cur.value)
+            if (cur.left) queue.push(cur.left)
+            if (cur.right) queue.push(cur.right)
         }
+        return res
     }
-
-
-    minVal(node = this.root){
-        if(!node.left){
-            return node.value
-        } else {
-            return this.minVal(node.left)
-        }
+    delete(value) {
+        this.root = this.#delete(value, this.root)
     }
-    
-
-    maxVal(node = this.root){
-        if (!node.right) {
-            return node.right
-        }else{
-            return this.maxVal(node.right)
-        }
-    }
-
-    delete(value){
-        this.root = this.#deleteVal(value,this.root)
-        
-    }
-
-    delete(value){
-        this.root = this.#deleteVal(value,this.root)   
-    }
-    
-    #deleteVal(value,node){
-        if(node===null) return node
-        if (value<node.value) {
-            node.left = this.#deleteVal(value,node.left)
-        } else if (value>node.value){
-            node.right = this.#deleteVal(value,node.right)
-        } else {
-            if(!node.left && !node.right){
-                return null
-            } else if (!node.left) {
-                return node.right
-            } else if (!node.right){
-                return node.left
-            }
-            node.value = this.minVal(node.right)
-            node.right = this.#deleteVal(node.value,node.right)
+    #delete(value, node) {
+        if (!node) return node
+        if (value < node.value) return this.#delete(value, node.left)
+        else if (value > node.value) return this.#delete(value, node.right)
+        else {
+            if (!node.left) return node.right
+            if (!node.right) return node.left
+            node.value = this.minValue(node.right)
+            node.right = this.#delete(value, node.right)
         }
         return node
     }
-
-    deletea(v){
-        this.root = this.ddd(this.root,val)
+    minValue(node = this.root) {
+        return node.left ? node.left.value : this.minValue(node.left)
     }
-
-    ddd(root,val){
-        if(root === null)
-        if(val<root.value){
-            root.left = this.ddd(root.left,val)
-        }else if(val>node.left){
-            root.right = this.ddd(root.right,val)
-        }else{
-            if (!root.left&&!root.right) {
-                return null
-            }else if (!root.left){
-                return root.right
-            }else if(!root.right){
-                return root.left
+    maxValue(node = this.root) {
+        return node.right ? node.right.value : this.maxValue(node.right)
+    }
+    hieght(node = this.root) {
+        if (!node) return -1
+        let left = this.hieght(node.left)
+        let right = this.hieght(node.right)
+        return Math.max(left, right)
+    }
+    depth(value, node = this.root, level = 0) {
+        if (!node) return -1
+        if (node.value === value) return level
+        const left = this.depth(value, node.left, level + 1)
+        const right = this.depth(value, node.right, level + 1)
+        if (left !== -1) return left
+        if (right !== -1) return right
+        return -1
+    }
+    findClosestValue(value) {
+        let cur = this.root;
+        let closest = this.root.value;
+        while (cur) {
+            if (Math.abs(cur.value - value) < Math.abs(closest - value)) {
+                closest = cur.value;
             }
-            root.value = this.minVal(node.right)
-            root.right = this.ddd(node.value,val)
-
+            cur = value < cur.value ? cur.left : cur.right;
         }
-        return node
+        return closest;
     }
     
 }
+function isValidBST(root, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+    if (!root) {
+        return true;
+    }
 
+    if (root.value <= min || root.value >= max) {
+        return false;
+    }
 
+    return isValidBST(root.left, min, root.value) && isValidBST(root.right, root.value, max);
+}
 
-const tree = new BinaryTree()
-tree.insert(53)
-tree.insert(213)
-tree.insert(43)
-tree.insert(27676)
-tree.insert(223)
-tree.insert(2)
-tree.postOrder()
-console.log('\n');
-tree.preOrder()
-console.log('\n');
-tree.inOrder()
+let tree = new BinaryTree();
+tree.insert(50);
+tree.insert(20);
+tree.insert(23);
+tree.insert(87);
+tree.insert(72);
+tree.insert(10);
+tree.insert(35);
+tree.insert(23);
+tree.insert(678);
+console.log(`inOrder: ${tree.inOrder()}`);
+console.log(`preOrder: ${tree.preOrder()}`);
+console.log(`postOrder: ${tree.postOrder()}`);
+console.log(`levelOrder: ${tree.levelOrder()}`);
+console.log(tree.hieght());
+console.log(tree.findClosestValue(22));

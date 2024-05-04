@@ -1,63 +1,111 @@
-class Node {
+class TreeNode {
     constructor(value) {
         this.value = value
         this.left = null
         this.right = null
     }
-
 }
 
-class BinaryTree {
+class BinarySearchTree {
     constructor() {
         this.root = null
     }
     insert(value) {
-        const node = new Node(value)
-        if (this.root) return this.#insert(this.root, node)
-        else this.root = node
+        const newNode = new TreeNode(value)
+        if (!this.root) this.root = newNode
+        else this.#insert(this.root, newNode)
     }
-    #insert(root, newNode) {
-        if (newNode.value < root.value) {
-            if (!root.left) root.left = newNode
-            else this.#insert(root.left, newNode)
+    #insert(node, newNode) {
+        if (newNode.value < node.value) {
+            if (!node.left) node.left = newNode;
+            else return this.#insert( node.left, newNode);
         } else {
-            if (!root.right) root.right = newNode
-            else this.#insert(root.right, newNode)
+            if (!node.right) node.right = newNode;
+            else return this.#insert(node.right,newNode);
         }
     }
     search(value, root = this.root) {
         if (!root) return false
         if (root.value === value) return true
-        if (value < root.value) {
-            this.search(value, root.left)
-        } else {
-            this.search(value, root.right)
+        if (value < root.value) return this.search(value,root.left)
+        else return this.search(value,root.right)
+    }
+    hieght(root = this.root) {
+        if (!root) return -1;
+        let left = this.hieght(root.left)
+        let right = this.hieght(root.right)
+        return Math.max(left, right)
+    }
+    delete(value) {
+        this.root = this.#delete(value, this.root)
+    }
+    #delete(value, root) {
+        if (!root) return root
+        if (value < root.value) root.left = this.#delete(value,root.left)
+        else if (value > root.value) root.right = this.#delete(value,root.right)
+        else {
+            if (!root.left) return root.right
+            if (!root.right) return root.left
+            root.value = this.minValue(root.right)
+            root.right = this.#delete(root.value, root.right)
         }
     }
+    depth(value, root = this.root, level = 0) {
+        if (!root) return -1
+        if (root.value == value) return level
+        let left = this.depth(value, root.left, level + 1)
+        let right = this.depth(value, root.right, level + 1)
+        if (left !== -1) return left
+        if (right !== -1) return right
+        return -1
+    }
+    minValue(node = this.root) {
+        let cur = node
+        while (cur.left) {
+            cur = cur.left;
+        }
+        return cur.value;
+    }
+    maxValue(node = this.root) {
+        if (!node) return null;
+        while (node.right) {
+            node = node.right;
+        }
+        return node.value;
+    }
     preOrder(root = this.root) {
-        let res = []
-        if (!root) return root
-        res.push(root.value);
-        res.concat(this.preOrder(root.left))
-        res.concat(this.preOrder(root.right))
-        return res
+        let res = [];
+        if (root) {
+            res.push(root.value);
+            res = res.concat(this.preOrder(root.left)); // Concatenate result of recursive call
+            res = res.concat(this.preOrder(root.right)); // Concatenate result of recursive call
+        }
+        return res;
     }
+    
     inOrder(root = this.root) {
-        let res = []
-        if (!root) return root
-        res.concat(this.inOrder(root.left))
-        res.push(root.value)
-        res.concat(this.inOrder(root.right))
+        let res = [];
+        if (root) {
+            res = res.concat(this.inOrder(root.left)); // Concatenate result of recursive call
+            res.push(root.value);
+            res = res.concat(this.inOrder(root.right)); // Concatenate result of recursive call
+        }
+        return res;
     }
+    
     postOrder(root = this.root) {
-        let res = []
-        if (!root) return res
-        res.concat(this.postOrder(root.left))
-        res.concat(this.postOrder(root.right))
-        return res
+        let res = [];
+        if (root) {
+            res = res.concat(this.postOrder(root.left)); // Concatenate result of recursive call
+            res = res.concat(this.postOrder(root.right)); // Concatenate result of recursive call
+            res.push(root.value);
+        }
+        return res;
     }
-    leveOrder() {
-        let queue = [this.root], res = []
+    
+    levelOrder(root = this.root) {
+        let queue = [root]
+        let res = []
         while (queue.length) {
             let cur = queue.shift()
             res.push(cur.value)
@@ -66,87 +114,42 @@ class BinaryTree {
         }
         return res
     }
-    minValue(root = this.root) {
-        return root.left ? this.minValue(root.left) : root.value;
-    }
-    maxValue(root = this.root) {
-        return root.right ? this.maxValue(root.right) : root.value
-    }
-    delete(value) {
-        this.root = this.#delete(value, this.root)
-    }
-    #delete(value, node) {
-        if (!node) return node
-        if (value < node.value) return this.#delete(value, node.left)
-        else if (value > node.value) return this.#delete(value, node.right)
-        else {
-            if (!node.left) return node.right
-            if (!node.right) return node.left
-            node.value = this.minValue(node.right)
-            node.right = this.#delete(value, node.right)
-        }
-        return node
-    }
-    hiehgt(root = this.root) {
-        if (!root) return -1
-        let left = this.hiehgt(root.left)
-        let right = this.hiehgt(root.right)
-        return Math.max(left, right) + 1
-    }
-    depth(value, root = this.root, level = 0) {
-        if (!root) return -1;
-        if (root.value === value) return level
-        const left = this.depth(value, root.left, level + 1)
-        const right = this.depth(value, root.right, level + 1)
-        if (left !== -1) return left
-        if (right !== -1) return right
-        return -1
-    }
-
-    findClose(root = this.root) {
-        let current = root
-        let closest = root.value
-        while (current) {
-            if (Math.abs(current.value - target) < Math.abs(closest - target)) closest = current.value
-            current = target < current.value ? current.left : current.right
+    findClosestValue(value) {
+        let cur = this.root
+        let closest = this.root.value
+        while (cur) {
+            if (Math.abs(cur.value - value) < Math.abs(closest - value)) closest = cur.value
+            cur = value < cur.value ? cur.left : cur.right
         }
         return closest
     }
 
-    isBST(root = this.root) {
-        return this.isBSTUtil(root, -Infinity, Infinity);
+}
+
+const isValidBST = (root, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) => {
+    if (!root) return true
+    if (root.value <= min || root.value >= max) {
+        return false
     }
-    
-    isBSTUtil(node, min, max) {
-        if (!node) return true;
-    
-        if (node.value <= min || node.value >= max) {
-            return false;
-        }
-        return (
-            this.isBSTUtil(node.left, min, node.value) &&
-            this.isBSTUtil(node.right, node.value, max)
-        );
-    }
-    
+    return isValidBST(root.left, min, root.value) && isValidBST(root.right, root.value, max) 
 }
 
 
 
 
-let tree = new Tree();
-tree.insert(50);
-tree.insert(20);
-tree.insert(23);
-tree.insert(87);
-tree.insert(72);
-tree.insert(10);
-tree.insert(35);
-tree.insert(23);
-tree.insert(678);
-// console.log(`inOrder: ${tree.inOrder()}`);
-// console.log(`preOrder: ${tree.preOrder()}`);
-// console.log(`postOrder: ${tree.postOrder()}`);
-// console.log(`levelOrder: ${tree.leveOrder()}`);
-console.log(tree.isBST());
-
+const bst = new BinarySearchTree()
+bst.insert(12)
+bst.insert(535)
+bst.insert(45)
+bst.insert(342)
+bst.insert(3452)
+bst.insert(1)
+bst.insert(22)
+bst.insert(111)
+bst.insert(62)
+bst.insert(17)
+bst.insert(175)
+bst.insert(72)
+console.log(bst.inOrder());
+bst.delete(72)
+console.log(bst.inOrder());
