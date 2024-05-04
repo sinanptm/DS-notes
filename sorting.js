@@ -1,5 +1,5 @@
 
-const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 56, 21, 542, 547, 232, 212, 32, 231, 42, -1]
+const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 12, 11, 13, 5, 6, 12, 123, 23, 45, 5, 2, 1, 2, 6, 9, 9, -1, 7, 56, 21, 542, 547, 232, 212, 32, 231, 42, -1]
 
 
 
@@ -121,9 +121,9 @@ const mergeSort = arr => {
 
 // ! Heap sort
 const heapify = (arr, n, i) => {
-    let largest = i; 
-    const left = 2 * i + 1; 
-    const right = 2 * i + 2;  
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
     if (left < n && arr[left] > arr[largest]) {
         largest = left;
     }
@@ -148,7 +148,6 @@ const heapSort = (arr) => {
     return arr;
 }
 
-// Example usage:
-const array = [12, 11, 13, 5, 6,12 , 123, 23, 45, 5, 2, 1, 2, 6, 9, 9, -1, 7];
-console.log("Original array:", array);
-console.log("Sorted array:", heapSort(array));
+
+console.log("Original array:", arr);
+console.log("Sorted array:", heapSort(arr));
