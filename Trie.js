@@ -19,6 +19,7 @@ class Trie {
             node = node.children.get(char);
         }
         node.isEndOfWord = true;
+        
     }
 
     search(word) {
