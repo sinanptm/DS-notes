@@ -3,248 +3,8 @@ class Node {
     constructor(data, next = null) {
         this.data = data;
         this.next = next;
-        this.prev = null;
     }
 }
-
-// class LinkedList {
-//     constructor() {
-//         this.head = null;
-//         this.size = 0;
-//     }
-
-//     insertFirst(data) {
-//         this.head = new Node(data, this.head);
-//         this.size++;
-//     }
-
-//     insertLast(data) {
-//         let node = new Node(data);
-//         let current;
-
-//         if (!this.head) {
-//             this.insertFirst(data)
-//         } else {
-//             current = this.head;
-
-//             while (current.next) {
-//                 current = current.next;
-//             }
-
-//             current.next = node;
-//             this.size++;
-//         }
-//     }
-
-
-//     insertAt(data, index) {
-//         if (index > 0 && index > this.size) {
-//             return;
-//         }
-//         if (index === 0) {
-//             this.insertFirst(data)
-//             return;
-//         }
-
-//         const node = new Node(data);
-//         let current, previous;
-//         current = this.head;
-//         let count = 0;
-//         while (count < index) {
-//             previous = current;
-//             count++;
-//             current = current.next
-//         }
-
-//         node.next = current
-//         previous.next = node
-//         this.size++;
-
-//     }
-
-//     getFirst() {
-//         return console.log(this.head);
-//     }
-
-
-//     getAtIndex(index) {
-//         let current = this.head;
-//         let count = 0;
-//         while (current) {
-//             if (count == index) {
-//                 console.log(current.data);
-//             }
-//             count++;
-//             current = current.next;
-//         }
-//     }
-
-//     getLast() {
-//         return this.getAtIndex(this.size - 1)
-//     }
-
-//     removeAt(index) {
-//         if (index > 0 && index > this.size) {
-//             return
-//         }
-//         let current = this.head;
-//         let previous
-//         let count = 0
-//         if (index === 0) {
-//             this.head = current.next
-//         } else {
-//             while (count < index) {
-//                 count++;
-//                 previous = current;
-//                 current = current.next;
-
-//             }
-//             previous.next = current.next;
-
-//         }
-//         this.size--;
-//     }
-
-
-//     clearList() {
-//         let current = this.head;
-//         while (current !== null) {
-//             let nextNode = current.next;
-//             current.next = null;
-//             current = nextNode;
-//         }
-//         this.head = null;
-//         this.size = 0;
-//     }
-
-//     printList() {
-//         let current = this.head;
-//         while (current) {
-//             console.log(current.data);
-//             current = current.next;
-//         }
-//     }
-
-// }
-
-
-// // const ls = new LinkedList();
-// // ls.insertFirst(200);
-// // ls.insertFirst(400);
-// // ls.insertAt(504, 2);
-// // ls.insertLast(300);
-// // ls.getLast();
-
-
-
-
-
-
-// class DoublyLinkedlist {
-//     constructor() {
-//         this.head = null;
-//         this.tail = null;
-//         this.size = 0;
-//     }
-
-//     legnth() {
-//         return this.size
-//     }
-
-//     isEmpty() {
-//         return this.size === 0;
-//     }
-//     addFirtst(data) {
-//         const node = new Node(data);
-//         if (this.isEmpty()) {
-//             this.head = node;
-//             this.tail = node;
-//         } else {
-//             node.next = this.head;
-//             this.head.prev = node
-//             this.head = node;
-//         }
-//         this.size++;
-//     }
-//     addLast(data) {
-//         const node = new Node(data);
-//         if (this.isEmpty()) {
-//             this.addFirtst(data)
-//             this.tail = node
-//         } else {
-//             this.tail.next = node;
-//             node.prev = this.tail;
-//             this.tail = node
-//         }
-//     }
-//     removeFitrst() {
-//         if (this.isEmpty()) {
-//             return "List is Empty";
-//         }
-//         const data = this.head;
-
-//         this.head = this.head.next;
-//         if (this.head) {
-//             this.head.prev = null;
-//         } else {
-//             this.tail = null;
-//         }
-//         this.size--;
-//         return data;
-//     }
-
-//     removLast() {
-//         if (this.isEmpty()) {
-//             return "List is Empty";
-//         }
-//         const value = this.tail.data;
-//         if (this.size === 1) {
-//             this.head = null;
-//             this.tail = null;
-//         } else {
-//             this.tail = this.tail.prev;
-//             this.tail.next = null
-//         }
-//         this.size--;
-//         return value;
-
-//     }
-
-//     printList() {
-//         if (this.isEmpty()) {
-//             console.log("List is Empty");
-//             return;
-//         }
-//         let current = this.head;
-//         let data = []
-//         while (current) {
-//             data.push(current.data)
-//             current = current.next;
-//         }
-//         console.log(data);
-//     }
-//     printReversedList() {
-//         if (this.isEmpty()) {
-//             console.log("List is Empty");
-//             return;
-//         }
-//         let current = this.tail;
-//         let data = []
-//         while (current) {
-//             data.push(current.data)
-//             current = current.prev;
-//         }
-//         console.log(data);
-//     }
-
-// }
-
-
-
-
-
-
-
 class LinkedList{
     constructor(){
         this.size =0
@@ -337,13 +97,273 @@ const quickSort = arr => {
 }
 
 
-const list = new LinkedList()
-list.insertFirst(3)
-list.insertFirst(4)
-list.insertFirst(6)
-list.insertFirst(7)
-list.insertLast(101)
-list.insertFirst(1)
-list.insertAt(322332,32)
-list.sortList()
-log(list.getList())
+class DoublyNode {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class DoublyLinkedList {
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
+    isEmpty() {
+        return this.size === 0;
+    }
+
+    getSize() {
+        return this.size;
+    }
+
+    insert(value) {
+        const node = new DoublyNode(value);
+        if (this.isEmpty()) {
+            this.head = node;
+            this.tail = node;
+        } else {
+            this.tail.next = node;
+            node.prev = this.tail;
+            this.tail = node;
+        }
+        this.size++;
+    }
+
+    remove(value) {
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        let current = this.head;
+        while (current) {
+            if (current.value === value) {
+                if (current === this.head) {
+                    this.head = current.next;
+                    if (this.head) {
+                        this.head.prev = null;
+                    }
+                } else if (current === this.tail) {
+                    this.tail = current.prev;
+                    this.tail.next = null;
+                } else {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                }
+                this.size--;
+                return value;
+            }
+            current = current.next;
+        }
+
+        return null;
+    }
+
+    search(value) {
+        let current = this.head;
+        while (current) {
+            if (current.value === value) {
+                return current;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+    print() {
+        if (this.isEmpty()) {
+            console.log('List is empty');
+        } else {
+            let current = this.head;
+            let list = '';
+            while (current) {
+                list += `${current.value} <-> `;
+                current = current.next;
+            }
+            list += 'null';
+            console.log(list);
+        }
+    }
+}
+
+class CircularSinglyLinkedList {
+    constructor() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    isEmpty() {
+        return this.size === 0;
+    }
+
+    getSize() {
+        return this.size;
+    }
+
+    insert(value) {
+        const node = new Node(value);
+        if (this.isEmpty()) {
+            this.head = node;
+            node.next = this.head;
+        } else {
+            let current = this.head;
+            while (current.next !== this.head) {
+                current = current.next;
+            }
+            current.next = node;
+            node.next = this.head;
+        }
+        this.size++;
+    }
+
+    remove(value) {
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        let current = this.head;
+        let previous = null;
+        do {
+            if (current.value === value) {
+                if (current === this.head) {
+                    this.head = this.head.next;
+                    let tail = this.head;
+                    while (tail.next !== current) {
+                        tail = tail.next;
+                    }
+                    tail.next = this.head;
+                } else {
+                    previous.next = current.next;
+                }
+                this.size--;
+                return value;
+            }
+            previous = current;
+            current = current.next;
+        } while (current !== this.head);
+
+        return null;
+    }
+
+    search(value) {
+        let current = this.head;
+        do {
+            if (current.value === value) {
+                return current;
+            }
+            current = current.next;
+        } while (current !== this.head);
+
+        return null;
+    }
+
+    print() {
+        if (this.isEmpty()) {
+            console.log('List is empty');
+        } else {
+            let current = this.head;
+            let list = '';
+            do {
+                list += `${current.value} -> `;
+                current = current.next;
+            } while (current !== this.head);
+            list += `(head)`;
+            console.log(list);
+        }
+    }
+}
+
+class CircularDoublyNode {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class CircularDoublyLinkedList {
+    constructor() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    isEmpty() {
+        return this.size === 0;
+    }
+
+    getSize() {
+        return this.size;
+    }
+
+    insert(value) {
+        const node = new CircularDoublyNode(value);
+        if (this.isEmpty()) {
+            this.head = node;
+            node.next = this.head;
+            node.prev = this.head;
+        } else {
+            let tail = this.head.prev;
+            tail.next = node;
+            node.prev = tail;
+            node.next = this.head;
+            this.head.prev = node;
+        }
+        this.size++;
+    }
+
+    remove(value) {
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        let current = this.head;
+        do {
+            if (current.value === value) {
+                if (current === this.head) {
+                    let tail = this.head.prev;
+                    this.head = this.head.next;
+                    this.head.prev = tail;
+                    tail.next = this.head;
+                } else {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                }
+                this.size--;
+                return value;
+            }
+            current = current.next;
+        } while (current !== this.head);
+
+        return null;
+    }
+
+    search(value) {
+        let current = this.head;
+        do {
+            if (current.value === value) {
+                return current;
+            }
+            current = current.next;
+        } while (current !== this.head);
+
+        return null;
+    }
+
+    print() {
+        if (this.isEmpty()) {
+            console.log('List is empty');
+        } else {
+            let current = this.head;
+            let list = '';
+            do {
+                list += `${current.value} <-> `;
+                current = current.next;
+            } while (current !== this.head);
+            list += `(head)`;
+            console.log(list);
+        }
+    }
+}

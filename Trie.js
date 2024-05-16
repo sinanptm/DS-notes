@@ -89,7 +89,6 @@ class Trie {
 
 
 
-// Example usage:
 const trie = new Trie();
 trie.insert("apple");
 trie.insert("app");

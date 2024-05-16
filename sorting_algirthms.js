@@ -1,10 +1,6 @@
 
 const arr = [1, 2, 3, 4, 545, 54, 52, 35, 4436, 12, 11, 13, 5, 6, 12, 123, 23, 45, 5, 2, 1, 2, 6, 9, 9, -1, 7, 56, 21, 542, 547, 232, 212, 32, 231, 42, -1]
 
-
-
-
-
 // ! Bubble Sort = { Time Complexity: O(N^2) }
 
 const bubbleSort = arr => {
@@ -147,7 +143,3 @@ const heapSort = (arr) => {
     }
     return arr;
 }
-
-
-console.log("Original array:", arr);
-console.log("Sorted array:", heapSort(arr));

@@ -5,7 +5,6 @@ const leanerSearch = (arr, target) => {
     return console.log('Not found');
 }
 // leanerSearch(arr, 2121)  // O(n)
-// binary serch is only usable in teh siorted array
 const binarySearch = (arr, target) => {
     let  left = 0;
     let rigth =arr.length-1;
